@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>期末复习方案 · 微积分 / 线性代数 / C++</title>
+<meta name="description" content="华南理工大一上学期期末复习方案：微积分、线性代数、C++ 九周计划与考点速查">
+<style>
+:root{
+  --bg:#f6f3ec; --paper:#fffdf8; --ink:#1f2328; --muted:#6b6f76; --line:#e4ded1;
+  --calc:#2f5fd0; --calc-bg:#e8eefc;
+  --la:#13836b; --la-bg:#e2f4ee;
+  --cpp:#c2561a; --cpp-bg:#fcebe0;
+  --accent:#1f2328; --star:#d99a00;
+  --radius:14px; --shadow:0 1px 2px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.05);
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#16181c; --paper:#1e2126; --ink:#e7e9ec; --muted:#9aa0a8; --line:#2f333a;
+    --calc:#7ea2ff; --calc-bg:#1f2a44;
+    --la:#4fd1ac; --la-bg:#173a31;
+    --cpp:#ff9a5c; --cpp-bg:#3d2617;
+    --accent:#e7e9ec; --star:#f2c14e;
+    --shadow:0 1px 2px rgba(0,0,0,.3);
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC","Source Han Sans SC",sans-serif;
+  line-height:1.7;font-size:15.5px}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+
+/* nav */
+nav.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav.top .wrap{display:flex;gap:6px;align-items:center;overflow-x:auto;padding-top:10px;padding-bottom:10px;white-space:nowrap}
+nav.top .brand{font-weight:700;margin-right:10px}
+nav.top a{text-decoration:none;padding:5px 12px;border-radius:999px;font-size:14px;color:var(--muted)}
+nav.top a:hover{background:var(--paper);color:var(--ink)}
+
+/* hero */
+header.hero{padding:48px 0 28px}
+.eyebrow{font-size:13px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+h1{font-size:clamp(28px,4.6vw,44px);line-height:1.2;margin:8px 0 12px;letter-spacing:-.01em}
+.lead{color:var(--muted);max-width:720px;margin:0}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.chip{font-size:13px;padding:3px 10px;border-radius:999px;border:1px solid var(--line);background:var(--paper)}
+
+/* sections */
+section{padding:28px 0}
+h2{font-size:24px;margin:0 0 6px;display:flex;align-items:center;gap:10px}
+h2 .dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.sub{color:var(--muted);margin:0 0 18px}
+h3{font-size:17px;margin:22px 0 10px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow)}
+.grid{display:grid;gap:14px}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g2{grid-template-columns:repeat(2,1fr)}
+@media (max-width:820px){.g3,.g2{grid-template-columns:1fr}}
+
+/* countdown */
+.cd{display:flex;flex-direction:column;gap:6px;border-top:4px solid var(--c)}
+.cd .name{font-weight:700;color:var(--c)}
+.cd .days{font-size:40px;font-weight:800;line-height:1.1;font-variant-numeric:tabular-nums}
+.cd .days small{font-size:15px;font-weight:500;color:var(--muted);margin-left:4px}
+.cd input{font:inherit;font-size:14px;padding:5px 8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);width:100%}
+.cd .bar{height:6px;border-radius:6px;background:var(--line);overflow:hidden}
+.cd .bar i{display:block;height:100%;background:var(--c);width:0;transition:width .4s}
+.cd .meta{font-size:13px;color:var(--muted)}
+.note{font-size:13.5px;color:var(--muted);margin-top:10px}
+
+/* phases */
+.phase{border-left:4px solid var(--line);padding:4px 0 4px 14px}
+.phase b{display:block}
+.phase .when{font-size:13px;color:var(--muted)}
+.phase.p1{border-color:#8aa4e8}.phase.p2{border-color:#e0a640}.phase.p3{border-color:#d6564a}
+
+/* week plan */
+.week{margin-bottom:14px;padding:0;overflow:hidden}
+.week summary{list-style:none;cursor:pointer;padding:14px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.week summary::-webkit-details-marker{display:none}
+.week summary .wk{font-weight:800;min-width:56px}
+.week summary .date{color:var(--muted);font-size:14px}
+.week summary .tag{font-size:12px;padding:2px 9px;border-radius:999px;background:var(--bg);border:1px solid var(--line)}
+.week summary .now{font-size:12px;padding:2px 9px;border-radius:999px;background:var(--accent);color:var(--bg);font-weight:700}
+.week summary .wprog{margin-left:auto;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.week summary .theme{flex-basis:100%;font-size:14px;color:var(--muted);margin-top:-4px}
+.week.current{outline:2px solid var(--accent)}
+.week .cols{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line)}
+@media (max-width:820px){.week .cols{grid-template-columns:1fr}}
+.week .col{padding:14px 18px}
+.week .col + .col{border-left:1px solid var(--line)}
+@media (max-width:820px){.week .col + .col{border-left:0;border-top:1px solid var(--line)}}
+.week .col h4{margin:0 0 8px;font-size:14px;color:var(--c)}
+.task{display:flex;gap:9px;align-items:flex-start;padding:4px 0;font-size:14.5px;cursor:pointer}
+.task input{margin-top:5px;accent-color:var(--c);width:16px;height:16px;flex:none;cursor:pointer}
+.task.done span{color:var(--muted);text-decoration:line-through}
+
+/* progress */
+.prog{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+@media (max-width:820px){.prog{grid-template-columns:repeat(2,1fr)}}
+.prog .p{padding:12px 16px}
+.prog .p .lbl{font-size:13px;color:var(--muted)}
+.prog .p .num{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums}
+.prog .p .bar{height:5px;border-radius:5px;background:var(--line);overflow:hidden;margin-top:6px}
+.prog .p .bar i{display:block;height:100%;background:var(--c,var(--accent));width:0;transition:width .4s}
+.btn{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:8px;padding:5px 12px;cursor:pointer}
+.btn:hover{border-color:var(--muted)}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+
+/* subject blocks */
+.subject{--c:var(--calc);--cb:var(--calc-bg)}
+.subject.la{--c:var(--la);--cb:var(--la-bg)}
+.subject.cpp{--c:var(--cpp);--cb:var(--cpp-bg)}
+.subject h2 .dot{background:var(--c)}
+.topic{display:grid;grid-template-columns:190px 1fr;gap:4px 18px;padding:14px 0;border-top:1px solid var(--line)}
+.topic:first-child{border-top:0;padding-top:0}
+@media (max-width:700px){.topic{grid-template-columns:1fr}}
+.topic .t{font-weight:700}
+.topic .stars{color:var(--star);font-size:13px;letter-spacing:1px}
+.topic ul{margin:0;padding-left:18px}
+.topic li{margin:2px 0}
+.kbd{background:var(--cb);color:var(--c);padding:0 6px;border-radius:5px;font-weight:600;white-space:nowrap}
+.formula{font-family:"Times New Roman","Cambria Math",serif;font-size:16.5px}
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:13px;color:var(--muted);font-weight:600}
+td.f{font-family:"Times New Roman","Cambria Math",serif;font-size:16px}
+.tip{background:var(--cb);border-radius:10px;padding:12px 16px;font-size:14.5px}
+.tip b{color:var(--c)}
+pre{background:#1d2128;color:#e6e6e6;border-radius:10px;padding:14px 16px;overflow-x:auto;font-family:var(--mono);font-size:13.2px;line-height:1.55;margin:8px 0 0}
+pre .c{color:#7f8c98}
+pre .k{color:#ff9e64}
+code{font-family:var(--mono);font-size:.92em;background:var(--bg);border:1px solid var(--line);padding:0 5px;border-radius:5px}
+.pit li{margin:6px 0}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:700px){.cmp{grid-template-columns:1fr}}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.tabs button{font:inherit;font-size:13.5px;border:1px solid var(--line);background:var(--paper);color:var(--muted);padding:4px 12px;border-radius:999px;cursor:pointer}
+.tabs button.on{background:var(--c);color:#fff;border-color:var(--c)}
+.tpl{display:none}.tpl.on{display:block}
+
+footer{padding:40px 0 60px;color:var(--muted);font-size:13.5px;border-top:1px solid var(--line);margin-top:30px}
+@media print{nav.top,.btn,.cd input{display:none}.week .cols{display:grid!important}body{background:#fff}}
+</style>
+</head>
+<body>
+
+<nav class="top"><div class="wrap">
+  <span class="brand">📚 期末复习</span>
+  <a href="#countdown">倒计时</a>
+  <a href="#strategy">总体策略</a>
+  <a href="#plan">九周计划</a>
+  <a href="#calc">微积分</a>
+  <a href="#la">线性代数</a>
+  <a href="#cpp">C++</a>
+  <a href="#daily">每日安排</a>
+  <a href="#exam">考前清单</a>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+  <div class="eyebrow">华南理工大学 · 大一上学期 · 期末复习方案</div>
+  <h1>微积分 · 线性代数 · C++<br>九周复习计划</h1>
+  <p class="lead">从 11 月 9 日到 1 月中旬考试周，分「跟课补漏 → 专题强化 → 真题冲刺」三个阶段。每周任务可以直接打勾，进度会保存在你自己的浏览器里。</p>
+  <div class="chips">
+    <span class="chip">微积分Ⅰ(一)：一元函数微积分</span>
+    <span class="chip">线性代数：行列式 → 二次型</span>
+    <span class="chip">C++(一)：面向过程，第 1–6 章</span>
+  </div>
+</div></header>
+
+<main class="wrap">
+
+<!-- 倒计时 -->
+<section id="countdown">
+  <h2>⏳ 考试倒计时</h2>
+  <p class="sub">默认日期是预估值。教务处公布考试安排后，在下面改成实际日期即可（会自动保存）。</p>
+  <div class="grid g3">
+    <div class="card cd" style="--c:var(--calc)">
+      <div class="name">微积分</div>
+      <div class="days" id="d-calc">—</div>
+      <div class="bar"><i id="b-calc"></i></div>
+      <input type="date" id="i-calc" aria-label="微积分考试日期">
+      <div class="meta" id="m-calc"></div>
+    </div>
+    <div class="card cd" style="--c:var(--la)">
+      <div class="name">线性代数</div>
+      <div class="days" id="d-la">—</div>
+      <div class="bar"><i id="b-la"></i></div>
+      <input type="date" id="i-la" aria-label="线性代数考试日期">
+      <div class="meta" id="m-la"></div>
+    </div>
+    <div class="card cd" style="--c:var(--cpp)">
+      <div class="name">C++ 程序设计</div>
+      <div class="days" id="d-cpp">—</div>
+      <div class="bar"><i id="b-cpp"></i></div>
+      <input type="date" id="i-cpp" aria-label="C++考试日期">
+      <div class="meta" id="m-cpp"></div>
+    </div>
+  </div>
+  <p class="note">进度条 = 从 11 月 9 日开始复习到考试这段时间已经走过的比例。</p>
+</section>
+
+<!-- 总体策略 -->
+<section id="strategy">
+  <h2>🧭 总体策略</h2>
+  <p class="sub">三门课一起准备，关键是：<b>数学靠每天手算，C++ 靠手写代码，三门都靠往年真题。</b></p>
+  <div class="grid g3">
+    <div class="card phase p1"><b>阶段一 · 跟课补漏</b><span class="when">第 1–4 周｜11/9 – 12/6</span>
+      <p style="margin:8px 0 0">课还没上完，所以这一阶段是“边上新课、边把前面章节补扎实”。每章做完课后题，开始建错题本。</p></div>
+    <div class="card phase p2"><b>阶段二 · 专题强化</b><span class="when">第 5–7 周｜12/7 – 12/27</span>
+      <p style="margin:8px 0 0">按题型做专题：求极限、积分计算、中值定理证明；含参方程组、对角化；链表、程序阅读。</p></div>
+    <div class="card phase p3"><b>阶段三 · 真题冲刺</b><span class="when">第 8–9 周｜12/28 – 考前</span>
+      <p style="margin:8px 0 0">每科至少 3 套往年卷，严格计时 120 分钟。之后只看错题本和公式表，不再开新坑。</p></div>
+  </div>
+
+  <h3>五条原则</h3>
+  <div class="grid g2">
+    <div class="card"><b>① 往年真题是第一资料</b><br>找学长学姐、班群、年级群要近 3–5 年的期末卷。老师出题风格稳定，真题比任何教辅都准。</div>
+    <div class="card"><b>② 错题本只记“为什么错”</b><br>每题写：错因（概念 / 计算 / 审题 / 没思路）+ 正确的第一步。每周日花 30 分钟重做本周错题。</div>
+    <div class="card"><b>③ 主动回忆 &gt; 重看笔记</b><br>合上书，在白纸上默写公式、写出解题步骤，写不出来的才去翻书。重看笔记的“熟悉感”是假的会。</div>
+    <div class="card"><b>④ C++ 是笔试，要练手写</b><br>期末是闭卷笔试，没有编译器帮你报错。每周至少一次在纸上写完整程序，再上机验证。</div>
+  </div>
+  <div class="card" style="margin-top:14px"><b>⑤ 时间分配建议</b>：微积分 40% ｜ 线性代数 30% ｜ C++ 30%。微积分内容最多、计算量最大；线代概念环环相扣，前面没懂后面会崩；C++ 有上机基础的话可以少一点，零基础则调到 35–40%。</div>
+</section>
+
+<!-- 九周计划 -->
+<section id="plan">
+  <h2>🗓️ 九周计划（可打勾）</h2>
+  <p class="sub">点击周标题展开 / 收起。当前所在的周会自动展开并加框。如果你们的上课进度不同，按实际情况把任务往前或往后挪。</p>
+  <div class="prog">
+    <div class="card p"><div class="lbl">总进度</div><div class="num" id="p-all">0%</div><div class="bar"><i id="pb-all"></i></div></div>
+    <div class="card p" style="--c:var(--calc)"><div class="lbl">微积分</div><div class="num" id="p-calc">0%</div><div class="bar"><i id="pb-calc"></i></div></div>
+    <div class="card p" style="--c:var(--la)"><div class="lbl">线性代数</div><div class="num" id="p-la">0%</div><div class="bar"><i id="pb-la"></i></div></div>
+    <div class="card p" style="--c:var(--cpp)"><div class="lbl">C++</div><div class="num" id="p-cpp">0%</div><div class="bar"><i id="pb-cpp"></i></div></div>
+  </div>
+  <div class="row" style="margin-bottom:14px">
+    <button class="btn" id="expandAll">全部展开</button>
+    <button class="btn" id="collapseAll">全部收起</button>
+    <button class="btn" id="resetAll">清空打勾记录</button>
+  </div>
+  <div id="weeks"></div>
+</section>
+
+<!-- 微积分 -->
+<section id="calc" class="subject">
+  <h2><span class="dot"></span>微积分Ⅰ(一) 考点地图</h2>
+  <p class="sub">范围：函数、极限与连续 → 导数与微分 → 中值定理与导数应用 → 不定积分 → 定积分 → 定积分应用。星级 = 期末重要程度。</p>
+  <div class="card">
+    <div class="topic"><div><div class="t">极限与连续</div><div class="stars">★★★★★</div></div>
+      <ul>
+        <li><b>求极限的武器库</b>：代入 / 约分 / 有理化 → <span class="kbd">等价无穷小</span>（只在乘除因子中替换）→ <span class="kbd">洛必达</span>（每用一次都要检查是不是 0/0 或 ∞/∞）→ <span class="kbd">泰勒展开</span>（加减项里没法等价替换时用）</li>
+        <li>1<sup>∞</sup> 型：<span class="formula">lim f<sup>g</sup> = e<sup>lim (f−1)·g</sup></span>；∞−∞ 型先通分；0·∞ 型化成分式</li>
+        <li>数列极限：夹逼准则、单调有界准则（常考递推数列）</li>
+        <li>间断点分类：第一类（可去、跳跃）、第二类（无穷、振荡）——先找“没定义的点”和分段点</li>
+      </ul></div>
+    <div class="topic"><div><div class="t">导数与微分</div><div class="stars">★★★★</div></div>
+      <ul>
+        <li>分段函数在分段点处<b>必须用定义</b>求导，并分左右导数</li>
+        <li>复合函数链式法则、隐函数求导、对数求导法（幂指函数 u<sup>v</sup>）</li>
+        <li>参数方程二阶导：<span class="formula">d²y/dx² = [d(dy/dx)/dt] ÷ (dx/dt)</span>（最容易漏除 dx/dt）</li>
+        <li>高阶导数：找规律或莱布尼茨公式；可导 ⇒ 连续，反之不成立</li>
+      </ul></div>
+    <div class="topic"><div><div class="t">中值定理与导数应用</div><div class="stars">★★★★★</div></div>
+      <ul>
+        <li>罗尔 / 拉格朗日 / 柯西：证明题的关键是<b>构造辅助函数</b>（见下方速查表）</li>
+        <li>用单调性证明不等式：设 F(x)=左−右，求导判号，看端点值</li>
+        <li>极值与最值、凹凸性与拐点、渐近线（水平 / 铅直 / 斜）——常出综合大题</li>
+        <li>泰勒公式（带佩亚诺余项）用于求极限、确定无穷小阶数</li>
+      </ul></div>
+    <div class="topic"><div><div class="t">不定积分</div><div class="stars">★★★★</div></div>
+      <ul>
+        <li>凑微分（第一换元）是最常用的；看到 f(φ(x))φ′(x) 就凑</li>
+        <li>第二换元：√(a²−x²) → x=a sin t；√(a²+x²) → x=a tan t；√(x²−a²) → x=a sec t；根式 ⁿ√(ax+b) 直接令为 t</li>
+        <li>分部积分选 u 的顺序：<span class="kbd">反对幂三指</span>（反三角 &gt; 对数 &gt; 幂 &gt; 三角 &gt; 指数，越靠前越适合当 u）</li>
+        <li>有理函数：先拆部分分式；三角有理式考虑万能代换（最后手段）</li>
+      </ul></div>
+    <div class="topic"><div><div class="t">定积分</div><div class="stars">★★★★★</div></div>
+      <ul>
+        <li>换元必须<b>同时换上下限</b>；对称区间先看奇偶性（奇函数积分为 0）</li>
+        <li><b>变限积分求导</b>：<span class="formula">d/dx ∫<sub>a</sub><sup>φ(x)</sup> f(t)dt = f(φ(x))·φ′(x)</span>，常和洛必达一起出极限题</li>
+        <li>被积函数里含 x 时先把 x 提到积分号外再求导</li>
+        <li>反常积分：无穷限、瑕积分的敛散判断，p-积分结论要背</li>
+      </ul></div>
+    <div class="topic"><div><div class="t">定积分应用</div><div class="stars">★★★</div></div>
+      <ul>
+        <li>平面图形面积（先画图找交点）；旋转体体积：圆盘法 <span class="formula">V=π∫f²(x)dx</span>，柱壳法 <span class="formula">V=2π∫x|f(x)|dx</span>（绕 y 轴）</li>
+        <li>曲线弧长 <span class="formula">s=∫√(1+y′²)dx</span>；物理应用（做功、压力）看老师有没有讲</li>
+      </ul></div>
+  </div>
+
+  <h3>公式速查</h3>
+  <div class="grid g2">
+    <div class="card"><b>x → 0 时的等价无穷小</b>
+      <table><tbody>
+        <tr><td class="f">sin x ~ tan x ~ arcsin x ~ arctan x ~ x</td></tr>
+        <tr><td class="f">ln(1+x) ~ e<sup>x</sup>−1 ~ x　　a<sup>x</sup>−1 ~ x ln a</td></tr>
+        <tr><td class="f">1−cos x ~ x²/2　　(1+x)<sup>α</sup>−1 ~ αx</td></tr>
+        <tr><td class="f">x − sin x ~ x³/6　　tan x − x ~ x³/3</td></tr>
+        <tr><td class="f">x − ln(1+x) ~ x²/2</td></tr>
+      </tbody></table></div>
+    <div class="card"><b>常用泰勒展开（到 x³）</b>
+      <table><tbody>
+        <tr><td class="f">e<sup>x</sup> = 1 + x + x²/2 + x³/6 + o(x³)</td></tr>
+        <tr><td class="f">sin x = x − x³/6 + o(x³)</td></tr>
+        <tr><td class="f">cos x = 1 − x²/2 + x⁴/24 + o(x⁴)</td></tr>
+        <tr><td class="f">ln(1+x) = x − x²/2 + x³/3 + o(x³)</td></tr>
+        <tr><td class="f">(1+x)<sup>α</sup> = 1 + αx + α(α−1)x²/2 + o(x²)</td></tr>
+      </tbody></table></div>
+    <div class="card"><b>中值定理证明：辅助函数怎么造</b>
+      <table><thead><tr><th>要证的式子长这样</th><th>试试构造</th></tr></thead><tbody>
+        <tr><td class="f">f′(ξ) + f(ξ) = 0</td><td class="f">F = e<sup>x</sup>f(x)</td></tr>
+        <tr><td class="f">f′(ξ) + λf(ξ) = 0</td><td class="f">F = e<sup>λx</sup>f(x)</td></tr>
+        <tr><td class="f">ξf′(ξ) + f(ξ) = 0</td><td class="f">F = x f(x)</td></tr>
+        <tr><td class="f">ξf′(ξ) − f(ξ) = 0</td><td class="f">F = f(x) / x</td></tr>
+        <tr><td class="f">f′(ξ)g(ξ) + f(ξ)g′(ξ) = 0</td><td class="f">F = f(x)g(x)</td></tr>
+      </tbody></table>
+      <p class="note">套路：把 ξ 换成 x，看成某个乘积 / 商的导数，再对 F 用罗尔定理。</p></div>
+    <div class="card"><b>积分必背</b>
+      <table><tbody>
+        <tr><td class="f">∫ 1/(a²+x²) dx = (1/a) arctan(x/a) + C</td></tr>
+        <tr><td class="f">∫ 1/√(a²−x²) dx = arcsin(x/a) + C</td></tr>
+        <tr><td class="f">∫ 1/(x²−a²) dx = (1/2a) ln|(x−a)/(x+a)| + C</td></tr>
+        <tr><td class="f">∫ sec x dx = ln|sec x + tan x| + C</td></tr>
+        <tr><td class="f">∫<sub>0</sub><sup>π/2</sup> sin<sup>n</sup>x dx = ∫<sub>0</sub><sup>π/2</sup> cos<sup>n</sup>x dx（华里士公式）</td></tr>
+        <tr><td class="f">∫<sub>1</sub><sup>+∞</sup> 1/x<sup>p</sup> dx：p&gt;1 收敛，p≤1 发散</td></tr>
+      </tbody></table></div>
+  </div>
+  <div class="tip" style="margin-top:14px"><b>易错提醒：</b>等价替换只能替换<b>乘除</b>因子，不能替换加减中的某一项；洛必达不能用于数列（要先换成函数）；不定积分别忘了 +C；定积分换元别忘了换限。</div>
+</section>
+
+<!-- 线性代数 -->
+<section id="la" class="subject la">
+  <h2><span class="dot"></span>线性代数 考点地图</h2>
+  <p class="sub">主线：行列式 → 矩阵 → 向量组与线性方程组 → 特征值与相似对角化 → 二次型。秩是贯穿全书的核心概念。</p>
+  <div class="card">
+    <div class="topic"><div><div class="t">行列式</div><div class="stars">★★★★</div></div>
+      <ul>
+        <li>性质：换两行变号、某行乘 k 则值乘 k、倍加不变——计算主要靠“化上三角”</li>
+        <li>常见题型：<span class="kbd">行和相等</span>（各列加到第一列再提公因子）、爪形 / 箭形、范德蒙德、按行展开降阶</li>
+        <li>克拉默法则；代数余子式线性组合 <span class="formula">A₁₁+A₁₂+…</span> 等于把第一行换成系数后的行列式</li>
+      </ul></div>
+    <div class="topic"><div><div class="t">矩阵</div><div class="stars">★★★★★</div></div>
+      <ul>
+        <li>乘法<b>不满足交换律</b>；AB=O 推不出 A=O 或 B=O</li>
+        <li>求逆：<span class="formula">(A | E) → 初等行变换 → (E | A⁻¹)</span>；二阶直接用伴随（主对角互换、副对角变号）</li>
+        <li>矩阵方程 AX=B：<span class="formula">(A | B) → (E | X)</span>；XA=B 则先转置或右乘 A⁻¹</li>
+        <li>伴随矩阵、分块矩阵、初等矩阵（左乘变行、右乘变列）、矩阵的秩</li>
+      </ul></div>
+    <div class="topic"><div><div class="t">向量组与线性方程组</div><div class="stars">★★★★★</div></div>
+      <ul>
+        <li>线性相关 ⇔ 以向量为列的矩阵秩 &lt; 向量个数</li>
+        <li>极大无关组：按列排成矩阵，只做<b>初等行变换</b>化行阶梯，主元所在列即为所求</li>
+        <li>齐次 Ax=0：基础解系含 <span class="formula">n − r(A)</span> 个向量</li>
+        <li>非齐次 Ax=b 通解 = 特解 + 齐次通解；<b>含参数方程组讨论解的情况</b>几乎必考</li>
+      </ul></div>
+    <div class="topic"><div><div class="t">特征值与相似对角化</div><div class="stars">★★★★★</div></div>
+      <ul>
+        <li>|λE − A| = 0 求特征值，(λE − A)x = 0 求特征向量（基础解系）</li>
+        <li>可对角化 ⇔ 有 n 个线性无关的特征向量 ⇔ 每个 k 重特征值恰有 k 个线性无关特征向量</li>
+        <li>实对称矩阵：一定可以<b>正交</b>相似对角化——同一特征值的向量要施密特正交化，再全部单位化</li>
+        <li>利用 <span class="formula">A = PΛP⁻¹</span> 求 Aⁿ</li>
+      </ul></div>
+    <div class="topic"><div><div class="t">二次型</div><div class="stars">★★★★</div></div>
+      <ul>
+        <li>写矩阵：平方项系数放对角线，交叉项系数<b>除以 2</b> 放两边</li>
+        <li>正交变换化标准形（就是实对称矩阵正交对角化）、配方法、惯性定理</li>
+        <li>正定判定：顺序主子式全 &gt; 0 ⇔ 特征值全 &gt; 0（含参数求范围的题常考）</li>
+      </ul></div>
+    <div class="topic"><div><div class="t">空间解析几何<br><span style="font-weight:400;font-size:13px;color:var(--muted)">（若课程名含“解析几何”）</span></div><div class="stars">★★★</div></div>
+      <ul>
+        <li>数量积、向量积、混合积（平行六面体体积）；平面、直线方程与位置关系；点到平面 / 直线距离</li>
+        <li>常见二次曲面识别（椭球面、单 / 双叶双曲面、抛物面、锥面）</li>
+      </ul></div>
+  </div>
+
+  <h3>公式速查</h3>
+  <div class="grid g2">
+    <div class="card"><b>行列式 · 逆 · 伴随</b>
+      <table><tbody>
+        <tr><td class="f">|AB| = |A||B|　　|Aᵀ| = |A|　　|kA| = kⁿ|A|</td></tr>
+        <tr><td class="f">AA* = A*A = |A|E　　A⁻¹ = A* / |A|</td></tr>
+        <tr><td class="f">|A*| = |A|ⁿ⁻¹　　|A⁻¹| = 1/|A|</td></tr>
+        <tr><td class="f">(AB)⁻¹ = B⁻¹A⁻¹　　(AB)ᵀ = BᵀAᵀ</td></tr>
+      </tbody></table></div>
+    <div class="card"><b>秩</b>
+      <table><tbody>
+        <tr><td class="f">r(A) = r(Aᵀ) = r(AᵀA)</td></tr>
+        <tr><td class="f">r(AB) ≤ min{ r(A), r(B) }</td></tr>
+        <tr><td class="f">A<sub>m×n</sub>B<sub>n×s</sub> = O ⇒ r(A) + r(B) ≤ n</td></tr>
+        <tr><td class="f">Ax = b 有解 ⇔ r(A) = r(A|b)；唯一解 ⇔ = n</td></tr>
+      </tbody></table></div>
+    <div class="card"><b>特征值</b>
+      <table><tbody>
+        <tr><td class="f">λ₁ + λ₂ + … + λₙ = tr(A)　　λ₁λ₂…λₙ = |A|</td></tr>
+        <tr><td class="f">A 的特征值 λ ⇒ f(A) 的特征值 f(λ)</td></tr>
+        <tr><td class="f">A⁻¹ 的特征值 1/λ　　A* 的特征值 |A|/λ</td></tr>
+        <tr><td class="f">相似矩阵：特征值、行列式、迹、秩都相同</td></tr>
+      </tbody></table></div>
+    <div class="card"><b>“可逆”的等价条件（选择题高频）</b>
+      <table><tbody>
+        <tr><td>|A| ≠ 0 ⇔ r(A)=n ⇔ Ax=0 只有零解 ⇔ 列（行）向量组线性无关 ⇔ 0 不是特征值 ⇔ A 可写成初等矩阵的乘积</td></tr>
+      </tbody></table></div>
+  </div>
+  <div class="tip" style="margin-top:14px"><b>理解建议：</b>如果觉得线代抽象，可以在 B 站看 3Blue1Brown 的《线性代数的本质》系列（有中文字幕），把“矩阵 = 线性变换”“行列式 = 面积缩放比”“特征向量 = 只伸缩不转向的方向”这几个画面建立起来，再回来做题会顺很多。</div>
+</section>
+
+<!-- C++ -->
+<section id="cpp" class="subject cpp">
+  <h2><span class="dot"></span>C++ 程序设计(一) 考点地图</h2>
+  <p class="sub">以下题型与分值参考华南理工《高级语言程序设计(C++)(一)》考试大纲：闭卷笔试，120 分钟，满分 100 分，范围为第 1–6 章（面向过程部分）。不同学院 / 全英班可能有差异，以任课老师说明为准。</p>
+
+  <div class="grid g2">
+    <div class="card"><b>试卷结构</b>
+      <table><thead><tr><th>题型</th><th>题量</th><th>分值</th><th>怎么拿分</th></tr></thead><tbody>
+        <tr><td>单项选择</td><td>20 题</td><td>20</td><td>语法细节、概念</td></tr>
+        <tr><td>程序阅读</td><td>5 题</td><td>20</td><td>纸上逐行跟踪变量</td></tr>
+        <tr><td>程序填空</td><td>15 空</td><td>30</td><td>背熟典型算法模板</td></tr>
+        <tr><td>编程题</td><td>3 题</td><td>30</td><td>手写完整程序</td></tr>
+      </tbody></table></div>
+    <div class="card"><b>各章分值占比（大纲建议）</b>
+      <table><tbody>
+        <tr><td>第 1 章 程序设计概述</td><td>2%–5%</td></tr>
+        <tr><td>第 2 章 基本数据类型与表达式</td><td>10%–15%</td></tr>
+        <tr><td>第 3 章 程序控制结构</td><td>15%–20%</td></tr>
+        <tr><td><b>第 4 章 函数</b></td><td><b>20%–25%</b></td></tr>
+        <tr><td><b>第 5 章 指针、引用与数组</b></td><td><b>20%–25%</b></td></tr>
+        <tr><td>第 6 章 位运算、结构体与链表</td><td>15%–20%</td></tr>
+      </tbody></table></div>
+  </div>
+
+  <h3>各章重点</h3>
+  <div class="card">
+    <div class="topic"><div><div class="t">数据类型与表达式</div><div class="stars">★★★</div></div>
+      <ul><li>标识符规则（字母 / 下划线开头，不能是关键字）、整除与取余、类型自动转换、<code>sizeof</code>、逗号表达式、<code>i++</code> 与 <code>++i</code></li></ul></div>
+    <div class="topic"><div><div class="t">控制结构</div><div class="stars">★★★★</div></div>
+      <ul><li><code>switch</code> 没写 <code>break</code> 会“穿透”；<code>do-while</code> 至少执行一次；循环嵌套的执行次数；穷举法、递推法</li></ul></div>
+    <div class="topic"><div><div class="t">函数</div><div class="stars">★★★★★</div></div>
+      <ul><li><b>值传递 / 指针传递 / 引用传递</b>的区别（程序阅读必考）、重载、默认参数（只能从右往左给）、<code>static</code> 局部变量只初始化一次、全局 / 局部同名时的作用域、递归的调用与返回过程</li></ul></div>
+    <div class="topic"><div><div class="t">指针、引用与数组</div><div class="stars">★★★★★</div></div>
+      <ul><li>指针运算 <code>*(p+i)</code> 与 <code>p[i]</code>、数组名作参数退化为指针、二维数组、<code>new</code>/<code>delete[]</code>、C 风格字符串以 <code>'\0'</code> 结尾、<code>strlen</code> vs <code>sizeof</code>、<code>string</code> 类基本操作、指针数组 vs 数组指针</li></ul></div>
+    <div class="topic"><div><div class="t">位运算、结构体、链表</div><div class="stars">★★★★★</div></div>
+      <ul><li><code>&amp; | ^ ~ &lt;&lt; &gt;&gt;</code> 及位掩码；结构体定义 / 初始化 / 结构数组 / 作函数参数；<b>链表的创建、遍历、插入、删除</b>（填空题和编程题重灾区）</li></ul></div>
+  </div>
+
+  <h3>必背代码模板</h3>
+  <div class="tabs" id="tplTabs">
+    <button class="on" data-t="t1">链表</button>
+    <button data-t="t2">排序</button>
+    <button data-t="t3">递归</button>
+    <button data-t="t4">字符串</button>
+    <button data-t="t5">位运算</button>
+    <button data-t="t6">结构体排序（编程题）</button>
+  </div>
+
+<div class="tpl on" id="t1"><pre><span class="k">struct</span> Node { <span class="k">int</span> data; Node *next; };
+
+<span class="c">// 尾插法建表：输入若干正整数，以 0 结束</span>
+Node* create() {
+    Node *head = nullptr, *tail = nullptr; <span class="k">int</span> x;
+    cin &gt;&gt; x;
+    <span class="k">while</span> (x != 0) {
+        Node *p = <span class="k">new</span> Node; p-&gt;data = x; p-&gt;next = nullptr;
+        <span class="k">if</span> (head == nullptr) head = p; <span class="k">else</span> tail-&gt;next = p;
+        tail = p;
+        cin &gt;&gt; x;
+    }
+    <span class="k">return</span> head;
+}
+
+<span class="c">// 遍历</span>
+<span class="k">void</span> print(Node *head) {
+    <span class="k">for</span> (Node *p = head; p != nullptr; p = p-&gt;next) cout &lt;&lt; p-&gt;data &lt;&lt; <span class="k">' '</span>;
+}
+
+<span class="c">// 在升序链表中插入，保持有序</span>
+Node* insert(Node *head, <span class="k">int</span> x) {
+    Node *s = <span class="k">new</span> Node; s-&gt;data = x;
+    <span class="k">if</span> (head == nullptr || x &lt; head-&gt;data) { s-&gt;next = head; <span class="k">return</span> s; }
+    Node *p = head;
+    <span class="k">while</span> (p-&gt;next != nullptr &amp;&amp; p-&gt;next-&gt;data &lt; x) p = p-&gt;next;
+    s-&gt;next = p-&gt;next;   <span class="c">// 先接后面</span>
+    p-&gt;next = s;         <span class="c">// 再接前面（顺序不能反！）</span>
+    <span class="k">return</span> head;
+}
+
+<span class="c">// 删除第一个值为 x 的结点</span>
+Node* remove(Node *head, <span class="k">int</span> x) {
+    <span class="k">if</span> (head == nullptr) <span class="k">return</span> head;
+    <span class="k">if</span> (head-&gt;data == x) { Node *t = head; head = head-&gt;next; <span class="k">delete</span> t; <span class="k">return</span> head; }
+    Node *p = head;
+    <span class="k">while</span> (p-&gt;next != nullptr &amp;&amp; p-&gt;next-&gt;data != x) p = p-&gt;next;
+    <span class="k">if</span> (p-&gt;next != nullptr) { Node *t = p-&gt;next; p-&gt;next = t-&gt;next; <span class="k">delete</span> t; }
+    <span class="k">return</span> head;
+}</pre></div>
+
+<div class="tpl" id="t2"><pre><span class="c">// 冒泡排序（升序）</span>
+<span class="k">void</span> bubble(<span class="k">int</span> a[], <span class="k">int</span> n) {
+    <span class="k">for</span> (<span class="k">int</span> i = 0; i &lt; n - 1; i++)
+        <span class="k">for</span> (<span class="k">int</span> j = 0; j &lt; n - 1 - i; j++)
+            <span class="k">if</span> (a[j] &gt; a[j + 1]) { <span class="k">int</span> t = a[j]; a[j] = a[j + 1]; a[j + 1] = t; }
+}
+
+<span class="c">// 选择排序（升序）</span>
+<span class="k">void</span> selectSort(<span class="k">int</span> a[], <span class="k">int</span> n) {
+    <span class="k">for</span> (<span class="k">int</span> i = 0; i &lt; n - 1; i++) {
+        <span class="k">int</span> k = i;
+        <span class="k">for</span> (<span class="k">int</span> j = i + 1; j &lt; n; j++) <span class="k">if</span> (a[j] &lt; a[k]) k = j;
+        <span class="k">if</span> (k != i) { <span class="k">int</span> t = a[i]; a[i] = a[k]; a[k] = t; }
+    }
+}
+
+<span class="c">// 二分查找（a 已升序），找不到返回 -1</span>
+<span class="k">int</span> bsearch(<span class="k">int</span> a[], <span class="k">int</span> n, <span class="k">int</span> x) {
+    <span class="k">int</span> lo = 0, hi = n - 1;
+    <span class="k">while</span> (lo &lt;= hi) {
+        <span class="k">int</span> mid = (lo + hi) / 2;
+        <span class="k">if</span> (a[mid] == x) <span class="k">return</span> mid;
+        <span class="k">if</span> (a[mid] &lt; x) lo = mid + 1; <span class="k">else</span> hi = mid - 1;
+    }
+    <span class="k">return</span> -1;
+}</pre></div>
+
+<div class="tpl" id="t3"><pre><span class="c">// 斐波那契</span>
+<span class="k">int</span> fib(<span class="k">int</span> n) { <span class="k">if</span> (n == 0 || n == 1) <span class="k">return</span> n; <span class="k">return</span> fib(n - 1) + fib(n - 2); }
+
+<span class="c">// 最大公约数（辗转相除）</span>
+<span class="k">int</span> gcd(<span class="k">int</span> a, <span class="k">int</span> b) { <span class="k">return</span> b == 0 ? a : gcd(b, a % b); }
+
+<span class="c">// 阶乘</span>
+<span class="k">long long</span> fact(<span class="k">int</span> n) { <span class="k">return</span> n &lt;= 1 ? 1 : n * fact(n - 1); }
+
+<span class="c">// 逆序输出整数各位：输入 123 输出 321</span>
+<span class="k">void</span> rev(<span class="k">int</span> n) { cout &lt;&lt; n % 10; <span class="k">if</span> (n / 10 != 0) rev(n / 10); }
+
+<span class="c">// 汉诺塔：把 n 个盘从 a 经 b 移到 c</span>
+<span class="k">void</span> hanoi(<span class="k">int</span> n, <span class="k">char</span> a, <span class="k">char</span> b, <span class="k">char</span> c) {
+    <span class="k">if</span> (n == 1) { cout &lt;&lt; a &lt;&lt; <span class="k">"-&gt;"</span> &lt;&lt; c &lt;&lt; endl; <span class="k">return</span>; }
+    hanoi(n - 1, a, c, b);
+    cout &lt;&lt; a &lt;&lt; <span class="k">"-&gt;"</span> &lt;&lt; c &lt;&lt; endl;
+    hanoi(n - 1, b, a, c);
+}
+
+<span class="c">// 判断素数</span>
+<span class="k">bool</span> isPrime(<span class="k">int</span> n) {
+    <span class="k">if</span> (n &lt; 2) <span class="k">return false</span>;
+    <span class="k">for</span> (<span class="k">int</span> i = 2; i * i &lt;= n; i++) <span class="k">if</span> (n % i == 0) <span class="k">return false</span>;
+    <span class="k">return true</span>;
+}</pre></div>
+
+<div class="tpl" id="t4"><pre><span class="c">// 自己实现 strlen（指针写法）</span>
+<span class="k">int</span> myStrlen(<span class="k">const char</span> *s) { <span class="k">const char</span> *p = s; <span class="k">while</span> (*p != <span class="k">'\0'</span>) p++; <span class="k">return</span> p - s; }
+
+<span class="c">// 字符串逆置（原地）</span>
+<span class="k">void</span> reverseStr(<span class="k">char</span> s[]) {
+    <span class="k">int</span> i = 0, j = strlen(s) - 1;
+    <span class="k">while</span> (i &lt; j) { <span class="k">char</span> t = s[i]; s[i] = s[j]; s[j] = t; i++; j--; }
+}
+
+<span class="c">// 判断回文</span>
+<span class="k">bool</span> isPal(<span class="k">const char</span> s[]) {
+    <span class="k">int</span> i = 0, j = strlen(s) - 1;
+    <span class="k">while</span> (i &lt; j) <span class="k">if</span> (s[i++] != s[j--]) <span class="k">return false</span>;
+    <span class="k">return true</span>;
+}
+
+<span class="c">// 统计字母、数字、空格、其他字符个数</span>
+<span class="k">void</span> count(<span class="k">const char</span> *s) {
+    <span class="k">int</span> letter = 0, digit = 0, space = 0, other = 0;
+    <span class="k">for</span> (; *s; s++) {
+        <span class="k">if</span> ((*s &gt;= <span class="k">'a'</span> &amp;&amp; *s &lt;= <span class="k">'z'</span>) || (*s &gt;= <span class="k">'A'</span> &amp;&amp; *s &lt;= <span class="k">'Z'</span>)) letter++;
+        <span class="k">else if</span> (*s &gt;= <span class="k">'0'</span> &amp;&amp; *s &lt;= <span class="k">'9'</span>) digit++;
+        <span class="k">else if</span> (*s == <span class="k">' '</span>) space++;
+        <span class="k">else</span> other++;
+    }
+    cout &lt;&lt; letter &lt;&lt; <span class="k">' '</span> &lt;&lt; digit &lt;&lt; <span class="k">' '</span> &lt;&lt; space &lt;&lt; <span class="k">' '</span> &lt;&lt; other;
+}</pre></div>
+
+<div class="tpl" id="t5"><pre><span class="k">bool</span> odd   = x &amp; 1;              <span class="c">// 判断奇数</span>
+<span class="k">int</span>  bitK  = (x &gt;&gt; k) &amp; 1;       <span class="c">// 取第 k 位（从 0 数）</span>
+x |=  (1 &lt;&lt; k);                   <span class="c">// 第 k 位置 1</span>
+x &amp;= ~(1 &lt;&lt; k);                   <span class="c">// 第 k 位清 0</span>
+x ^=  (1 &lt;&lt; k);                   <span class="c">// 第 k 位取反</span>
+a ^= b; b ^= a; a ^= b;           <span class="c">// 不用临时变量交换</span>
+
+<span class="c">// 用 unsigned 表示集合 {0..31}：并 = |，交 = &amp;，差 = a &amp; ~b</span>
+<span class="c">// 统计二进制中 1 的个数</span>
+<span class="k">int</span> ones(<span class="k">unsigned</span> x) { <span class="k">int</span> c = 0; <span class="k">while</span> (x) { c += x &amp; 1; x &gt;&gt;= 1; } <span class="k">return</span> c; }
+
+<span class="c">// 输出整数的二进制（32 位）</span>
+<span class="k">void</span> printBin(<span class="k">unsigned</span> x) { <span class="k">for</span> (<span class="k">int</span> i = 31; i &gt;= 0; i--) cout &lt;&lt; ((x &gt;&gt; i) &amp; 1); }</pre></div>
+
+<div class="tpl" id="t6"><pre><span class="c">// 大纲样题：输入 n 个学生（学号、姓名、成绩），按成绩降序，输出前三名</span>
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+<span class="k">using namespace</span> std;
+
+<span class="k">struct</span> Student { <span class="k">int</span> id; string name; <span class="k">double</span> score; };
+
+<span class="k">void</span> sortDesc(Student s[], <span class="k">int</span> n) {
+    <span class="k">for</span> (<span class="k">int</span> i = 0; i &lt; n - 1; i++)
+        <span class="k">for</span> (<span class="k">int</span> j = 0; j &lt; n - 1 - i; j++)
+            <span class="k">if</span> (s[j].score &lt; s[j + 1].score) { Student t = s[j]; s[j] = s[j + 1]; s[j + 1] = t; }
+}
+
+<span class="k">int</span> main() {
+    <span class="k">int</span> n; cin &gt;&gt; n;
+    Student *s = <span class="k">new</span> Student[n];          <span class="c">// 动态内存分配</span>
+    <span class="k">for</span> (<span class="k">int</span> i = 0; i &lt; n; i++) cin &gt;&gt; s[i].id &gt;&gt; s[i].name &gt;&gt; s[i].score;
+    sortDesc(s, n);
+    <span class="k">for</span> (<span class="k">int</span> i = 0; i &lt; 3 &amp;&amp; i &lt; n; i++)    <span class="c">// 别忘了 n &lt; 3 的情况</span>
+        cout &lt;&lt; s[i].id &lt;&lt; <span class="k">" "</span> &lt;&lt; s[i].name &lt;&lt; <span class="k">" "</span> &lt;&lt; s[i].score &lt;&lt; endl;
+    <span class="k">delete</span>[] s;                            <span class="c">// new[] 对应 delete[]</span>
+    <span class="k">return</span> 0;
+}</pre></div>
+
+  <h3>程序阅读 / 选择题高频陷阱</h3>
+  <div class="grid g2">
+    <div class="card"><ul class="pit" style="margin:0;padding-left:18px">
+      <li><code>5/2</code> 结果是 <code>2</code>；<code>5/2.0</code> 才是 <code>2.5</code></li>
+      <li><code>if (a = 0)</code> 是赋值，条件永远为假</li>
+      <li><code>char a[10] = '5';</code> 错误；<code>char a[] = "abc";</code> 长度是 4（含 <code>'\0'</code>）</li>
+      <li>函数参数里的 <code>int a[]</code> 其实是指针，<code>sizeof(a)</code> 不是数组大小</li>
+      <li>数组下标从 0 到 n−1，<code>a[n]</code> 越界</li>
+      <li><code>&amp;&amp;</code> / <code>||</code> 短路：左边已能决定结果时右边不执行（右边的 <code>i++</code> 不会发生）</li>
+    </ul></div>
+    <div class="card"><ul class="pit" style="margin:0;padding-left:18px">
+      <li><code>static</code> 局部变量只初始化一次，多次调用会累积</li>
+      <li>引用参数 <code>int &amp;a</code> 会改到实参，值参数不会——阅读题先标出谁是引用</li>
+      <li><code>switch</code> 匹配后一直往下执行直到 <code>break</code></li>
+      <li><code>for(...);</code> 末尾多了分号，循环体是空语句</li>
+      <li><code>new[]</code> 配 <code>delete[]</code>；删除链表结点前先保存 <code>next</code></li>
+      <li>全局变量和局部变量同名时，函数内用的是局部的（<code>::x</code> 才是全局）</li>
+    </ul></div>
+  </div>
+  <div class="tip" style="margin-top:14px"><b>程序阅读做法：</b>在草稿纸上画一张“变量表”，每执行一行就更新一次值；遇到函数调用就另起一列，写清楚参数是拷贝还是引用；递归画调用树。不要靠“感觉”猜输出。<br><b>编程题做法：</b>先写 <code>#include</code>、<code>main</code> 框架和变量声明，再写核心逻辑；就算算法没写完，框架、输入输出也有步骤分。</div>
+</section>
+
+<!-- 每日安排 -->
+<section id="daily">
+  <h2>⏰ 每日安排模板</h2>
+  <p class="sub">按大一课表来估：工作日课后约 3 小时，周末一个整块半天做题。按自己的课表微调。</p>
+  <div class="grid g2">
+    <div class="card"><b>工作日（约 3 小时）</b>
+      <table><tbody>
+        <tr><td>课间 / 午饭后 15 分钟</td><td>默写公式表一张（等价无穷小、积分表、线代结论轮换）</td></tr>
+        <tr><td>晚自习 第 1 段 60 分钟</td><td>微积分：当天新课课后题 + 2 道专题题</td></tr>
+        <tr><td>第 2 段 45 分钟</td><td>线性代数：课后题，重点是手算不出错</td></tr>
+        <tr><td>第 3 段 45–60 分钟</td><td>C++：周一三五上机写题，周二四在纸上写程序 / 做阅读题</td></tr>
+        <tr><td>睡前 10 分钟</td><td>翻当天错题，只看“错因”和“正确第一步”</td></tr>
+      </tbody></table></div>
+    <div class="card"><b>周末</b>
+      <table><tbody>
+        <tr><td>周六上午 3 小时</td><td>本周最弱一科的专题训练（阶段三改为整套真题限时）</td></tr>
+        <tr><td>周六下午</td><td>休息 / 运动——别连轴转</td></tr>
+        <tr><td>周日 1.5 小时</td><td>错题本复盘：重做本周所有错题，还错的标 ★</td></tr>
+        <tr><td>周日 30 分钟</td><td>回到这个网页打勾，看下周任务，调整计划</td></tr>
+      </tbody></table></div>
+  </div>
+</section>
+
+<!-- 考前清单 -->
+<section id="exam">
+  <h2>✅ 考前清单</h2>
+  <div class="grid g3">
+    <div class="card"><b>考前三天</b>
+      <ul style="padding-left:18px;margin:8px 0 0">
+        <li>不再做新题，只做错题本里标 ★ 的</li>
+        <li>把三张公式速查表各默写一遍</li>
+        <li>C++ 把链表、排序模板各手写一遍</li>
+        <li>确认考场、座位号和考试时间</li>
+      </ul></div>
+    <div class="card"><b>考前一晚</b>
+      <ul style="padding-left:18px;margin:8px 0 0">
+        <li>翻一遍错题本的“错因”栏</li>
+        <li>准备：校园卡 / 学生证、黑色签字笔 ×2、2B 铅笔、橡皮、尺子</li>
+        <li>11 点前睡觉——熬夜换来的分数一定比睡眠丢掉的少</li>
+      </ul></div>
+    <div class="card"><b>考场上</b>
+      <ul style="padding-left:18px;margin:8px 0 0">
+        <li>先花 2 分钟通看全卷，从最有把握的题开始</li>
+        <li>一道题卡住超过 8 分钟就跳过，最后再回来</li>
+        <li>数学计算题写清步骤，过程分很重要</li>
+        <li>留 10 分钟检查：符号、积分常数、换限、分号</li>
+      </ul></div>
+  </div>
+</section>
+
+</main>
+
+<footer><div class="wrap">
+  <p>这份计划按华南理工大一上学期常见课程设置编写（微积分Ⅰ(一) 为一元函数微积分；C++ 题型参考学校公布的考试大纲）。具体考试范围、题型和日期请以任课老师和教务处通知为准。</p>
+  <p>想调整每周任务：用文本编辑器打开 <code>index.html</code>，搜索 <code>const WEEKS</code>，直接改里面的文字即可。打勾记录只保存在当前浏览器里。</p>
+  <p>祝期末顺利 💪</p>
+</div></footer>
+
+<script>
+const WEEKS = [
+  { start:"2026-11-09", end:"2026-11-15", phase:"阶段一 · 跟课补漏", theme:"打地基：极限、行列式、C++ 基础语法",
+    calc:["复习函数性质（有界、单调、奇偶、周期）与复合、反函数","整理“求极限方法清单”，每种方法做 3 道题","背熟等价无穷小表，每天默写一次","建好错题本（纸质或电子都行）"],
+    la:["行列式定义与性质，练 10 道化三角计算","专项：行和相等型、爪形、范德蒙德","按行（列）展开定理 + 代数余子式组合题"],
+    cpp:["第 2 章：数据类型、运算符优先级、类型转换","第 3 章：if / switch / 三种循环，各手写 2 个程序","上机：素数、水仙花数、九九乘法表"] },
+  { start:"2026-11-16", end:"2026-11-22", phase:"阶段一 · 跟课补漏", theme:"导数与矩阵运算",
+    calc:["导数定义（分段函数在分段点处用定义求导）","复合函数、隐函数、对数求导法各 5 题","参数方程一阶 / 二阶导数","间断点分类专题（第一类 / 第二类）"],
+    la:["矩阵运算：乘法、转置、方阵的幂","逆矩阵：伴随法 + 初等变换法","矩阵方程 AX=B、XA=B 各 3 题"],
+    cpp:["第 4 章：函数定义、声明、调用","值传递 vs 引用传递 vs 指针传递：各写一个 swap 对比","默认参数、函数重载规则"] },
+  { start:"2026-11-23", end:"2026-11-29", phase:"阶段一 · 跟课补漏", theme:"中值定理、秩、递归",
+    calc:["罗尔、拉格朗日、柯西定理：条件和结论默写","洛必达法则专题（注意每步检查类型）","泰勒公式：背 5 个常用展开，用它求极限"],
+    la:["初等变换与初等矩阵（左乘变行、右乘变列）","矩阵的秩：定义 + 用行阶梯形求秩","分块矩阵运算与分块求逆"],
+    cpp:["递归：阶乘、斐波那契、gcd、汉诺塔，画调用树","变量作用域与存储类别（static 局部变量）","程序阅读题 5 道（函数 + 递归）"] },
+  { start:"2026-11-30", end:"2026-12-06", phase:"阶段一 · 跟课补漏", theme:"导数应用、向量组、指针数组",
+    calc:["单调性、极值、最值应用题","凹凸性、拐点、渐近线 + 函数作图","用单调性证明不等式 5 题"],
+    la:["向量组线性相关 / 无关判定","极大无关组与向量组的秩","向量组等价、向量表示问题"],
+    cpp:["第 5 章：指针与引用、指针运算","一维 / 二维数组、数组作函数参数","动态内存 new / delete[]；C 风格字符串与 string"] },
+  { start:"2026-12-07", end:"2026-12-13", phase:"阶段二 · 专题强化", theme:"积分计算与方程组",
+    calc:["不定积分：凑微分专题 15 题","第二换元（三角代换、根式代换）","分部积分（反对幂三指）+ 有理函数积分"],
+    la:["齐次方程组基础解系","非齐次方程组通解结构","含参数方程组讨论（必考题型，做 5 道）"],
+    cpp:["第 6 章：位运算符与位掩码","结构体定义、初始化、结构数组、作参数","字符串处理模板手写一遍（逆置、回文、统计）"] },
+  { start:"2026-12-14", end:"2026-12-20", phase:"阶段二 · 专题强化", theme:"定积分与特征值",
+    calc:["定积分换元（换限！）与分部积分","对称区间奇偶性、周期函数积分","变限积分求导 + 与洛必达结合的极限题","反常积分敛散性"],
+    la:["特征值与特征向量计算 10 题","相似矩阵性质、可对角化判定","求 Aⁿ（利用相似对角化）"],
+    cpp:["链表专题：建表、遍历、插入、删除","默写链表模板直到不看也能写对","程序填空专项：排序、查找、链表各 5 空"] },
+  { start:"2026-12-21", end:"2026-12-27", phase:"阶段二 · 专题强化", theme:"应用题、证明题、二次型",
+    calc:["定积分应用：面积、旋转体体积、弧长","中值定理证明题专题（构造辅助函数）","第一套往年真题（不限时，查漏）"],
+    la:["实对称矩阵正交对角化（含施密特正交化）","二次型化标准形：正交变换法 + 配方法","正定判定 + 含参数求范围；第一套往年真题"],
+    cpp:["程序阅读专项 15 题（变量表跟踪法）","选择题陷阱集中过一遍","第一套往年真题（不限时）"] },
+  { start:"2026-12-28", end:"2027-01-03", phase:"阶段三 · 真题冲刺", theme:"限时真题，暴露弱点",
+    calc:["往年真题第 2 套（限时 120 分钟）","对答案，错题分类进错题本","针对最弱专题补 10 题"],
+    la:["往年真题第 2 套（限时）","错题归类：计算错 vs 概念错","把公式速查表默写一遍"],
+    cpp:["往年真题第 2 套（限时，纸上作答）","编程题上机验证自己的手写答案","重写一次结构体排序编程题"] },
+  { start:"2027-01-04", end:"2027-01-10", phase:"阶段三 · 真题冲刺", theme:"最后一套 + 回归错题本",
+    calc:["往年真题第 3 套（限时）","只做错题本中标 ★ 的题","默写等价无穷小 / 泰勒 / 积分表"],
+    la:["往年真题第 3 套（限时）","只做错题本中标 ★ 的题","过一遍“可逆等价条件”和特征值结论"],
+    cpp:["往年真题第 3 套（限时）","默写链表 / 排序 / 递归模板","过一遍高频陷阱清单"] }
+];
+
+const SUBJ = { calc:"微积分", la:"线性代数", cpp:"C++" };
+const COLORS = { calc:"var(--calc)", la:"var(--la)", cpp:"var(--cpp)" };
+const KEY = "scut-review-v1";
+const PLAN_START = "2026-11-09";
+const DEFAULT_DATES = { calc:"2027-01-11", la:"2027-01-13", cpp:"2027-01-15" };
+
+function load(){ try{ return JSON.parse(localStorage.getItem(KEY)) || {}; }catch(e){ return {}; } }
+function save(s){ try{ localStorage.setItem(KEY, JSON.stringify(s)); }catch(e){} }
+let state = load(); state.done = state.done || {}; state.dates = state.dates || {};
+
+function dayStart(d){ const x = new Date(d); x.setHours(0,0,0,0); return x; }
+function parse(s){ const [y,m,d] = s.split("-").map(Number); return new Date(y, m-1, d); }
+function fmt(s){ const d = parse(s); return (d.getMonth()+1) + "/" + d.getDate(); }
+const today = dayStart(new Date());
+
+/* ---- weeks ---- */
+function renderWeeks(){
+  const box = document.getElementById("weeks");
+  box.innerHTML = "";
+  WEEKS.forEach((w, wi) => {
+    const isNow = today >= parse(w.start) && today <= parse(w.end);
+    const isNext = wi === 0 && today < parse(w.start);
+    const det = document.createElement("details");
+    det.className = "card week" + (isNow || isNext ? " current" : "");
+    if (isNow || isNext) det.open = true;
+    const sum = document.createElement("summary");
+    sum.innerHTML = `<span class="wk">第 ${wi+1} 周</span><span class="date">${fmt(w.start)} – ${fmt(w.end)}</span>
+      <span class="tag">${w.phase}</span>${isNow ? '<span class="now">本周</span>' : ''}${isNext ? '<span class="now">即将开始</span>' : ''}
+      <span class="wprog" id="wp-${wi}"></span><span class="theme">${w.theme}</span>`;
+    det.appendChild(sum);
+    const cols = document.createElement("div"); cols.className = "cols";
+    ["calc","la","cpp"].forEach(sub => {
+      const col = document.createElement("div"); col.className = "col"; col.style.setProperty("--c", COLORS[sub]);
+      col.innerHTML = `<h4>${SUBJ[sub]}</h4>`;
+      w[sub].forEach((t, ti) => {
+        const id = `w${wi}-${sub}-${ti}`;
+        const lab = document.createElement("label");
+        lab.className = "task" + (state.done[id] ? " done" : "");
+        lab.innerHTML = `<input type="checkbox" ${state.done[id] ? "checked" : ""}><span></span>`;
+        lab.querySelector("span").textContent = t;
+        lab.querySelector("input").addEventListener("change", e => {
+          if (e.target.checked) state.done[id] = 1; else delete state.done[id];
+          lab.classList.toggle("done", e.target.checked);
+          save(state); updateProgress();
+        });
+        col.appendChild(lab);
+      });
+      cols.appendChild(col);
+    });
+    det.appendChild(cols);
+    box.appendChild(det);
+  });
+  updateProgress();
+}
+
+function updateProgress(){
+  const tot = {all:0,calc:0,la:0,cpp:0}, dn = {all:0,calc:0,la:0,cpp:0};
+  WEEKS.forEach((w, wi) => {
+    let wt = 0, wd = 0;
+    ["calc","la","cpp"].forEach(sub => w[sub].forEach((_, ti) => {
+      const ok = !!state.done[`w${wi}-${sub}-${ti}`];
+      tot[sub]++; tot.all++; wt++;
+      if (ok){ dn[sub]++; dn.all++; wd++; }
+    }));
+    const el = document.getElementById("wp-" + wi);
+    if (el) el.textContent = `${wd} / ${wt}`;
+  });
+  for (const k in tot){
+    const p = tot[k] ? Math.round(dn[k] / tot[k] * 100) : 0;
+    document.getElementById("p-" + k).textContent = p + "%";
+    document.getElementById("pb-" + k).style.width = p + "%";
+  }
+}
+
+document.getElementById("expandAll").onclick = () => document.querySelectorAll(".week").forEach(d => d.open = true);
+document.getElementById("collapseAll").onclick = () => document.querySelectorAll(".week").forEach(d => d.open = false);
+(() => {
+  const btn = document.getElementById("resetAll"); let armed = false, timer;
+  btn.onclick = () => {
+    if (!armed) {
+      armed = true; btn.textContent = "再点一次确认清空";
+      timer = setTimeout(() => { armed = false; btn.textContent = "清空打勾记录"; }, 3000);
+      return;
+    }
+    clearTimeout(timer); armed = false; btn.textContent = "清空打勾记录";
+    state.done = {}; save(state); renderWeeks();
+  };
+})();
+
+/* ---- countdown ---- */
+function renderCountdown(){
+  const start = parse(PLAN_START);
+  ["calc","la","cpp"].forEach(k => {
+    const inp = document.getElementById("i-" + k);
+    const val = state.dates[k] || DEFAULT_DATES[k];
+    inp.value = val;
+    const exam = parse(val);
+    const days = Math.round((exam - today) / 86400000);
+    const dEl = document.getElementById("d-" + k);
+    if (days > 0) dEl.innerHTML = `${days}<small>天</small>`;
+    else if (days === 0) dEl.innerHTML = `今天<small>加油！</small>`;
+    else dEl.innerHTML = `已结束<small>🎉</small>`;
+    const span = Math.max(1, (exam - start) / 86400000);
+    const passed = Math.min(1, Math.max(0, (today - start) / 86400000 / span));
+    document.getElementById("b-" + k).style.width = Math.round(passed * 100) + "%";
+    const wk = ["日","一","二","三","四","五","六"][exam.getDay()];
+    document.getElementById("m-" + k).textContent =
+      `${exam.getFullYear()} 年 ${exam.getMonth()+1} 月 ${exam.getDate()} 日（周${wk}）` + (state.dates[k] ? "" : " · 预估");
+  });
+}
+["calc","la","cpp"].forEach(k => {
+  document.getElementById("i-" + k).addEventListener("change", e => {
+    if (e.target.value) state.dates[k] = e.target.value; else delete state.dates[k];
+    save(state); renderCountdown();
+  });
+});
+
+/* ---- template tabs ---- */
+document.querySelectorAll("#tplTabs button").forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll("#tplTabs button").forEach(x => x.classList.toggle("on", x === b));
+  document.querySelectorAll(".tpl").forEach(t => t.classList.toggle("on", t.id === b.dataset.t));
+}));
+
+renderWeeks();
+renderCountdown();
+</script>
+</body>
+</html>
