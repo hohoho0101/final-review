@@ -188,7 +188,36 @@ th{font-size:13px;color:var(--muted);font-weight:600}
 .subject-la{--c:var(--la);--cb:var(--la-bg)}
 .subject-cpp{--c:var(--cpp);--cb:var(--cpp-bg)}
 footer{padding:26px 0 50px;color:var(--muted);font-size:13.5px;border-top:1px solid var(--line);margin-top:24px}
-@media print{nav.top,.toc,.btn,.chsel,.pager{display:none}body{background:#fff}.ch[hidden]{display:block!important}details>*{display:block}}
+/* wrong book & search */
+.wbtn{font:inherit;font-size:12.5px;border:1px solid var(--line);background:var(--paper);color:var(--muted);border-radius:999px;padding:1px 10px;cursor:pointer;white-space:nowrap}
+.wbtn:hover{border-color:var(--muted)}
+.wbtn.on{background:var(--warn);color:var(--warn-c);border-color:transparent;font-weight:600}
+.box.q .bt{display:flex;align-items:center;gap:8px}
+.box.q .bt .wbtn{margin-left:auto;letter-spacing:0;font-weight:400}
+.box.q .bt .wbtn.on{font-weight:600}
+nav.top .badge{display:inline-block;min-width:18px;padding:0 5px;margin-left:4px;border-radius:999px;background:var(--warn-c);color:#fff;font-size:11.5px;line-height:18px;text-align:center;font-weight:700}
+.pagev{padding:22px 0 40px}
+.pagev h2{font-size:21px;margin:0 0 4px}
+.wfil{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.wfil .btn.on{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.witem{border-left:4px solid var(--c);margin-bottom:12px}
+.witem .wh{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px;font-size:13px;color:var(--muted)}
+.witem .wh .tag{font-size:12.5px;font-weight:700;color:var(--c);background:var(--cb);padding:1px 10px;border-radius:999px}
+.witem .wh .sp{margin-left:auto}
+.witem .box.q{margin:6px 0 0}
+.dq .dqh .wbtn{margin-left:auto}
+.dq .dqh .wbtn + label{margin-left:4px}
+.witem details{border-top:1px dashed var(--line);margin-top:8px;padding-top:4px}
+.sbox{width:100%;font:inherit;font-size:16px;padding:10px 14px;border:1px solid var(--line);border-radius:12px;background:var(--paper);color:var(--ink);margin:6px 0 12px}
+.sres{display:block;width:100%;text-align:left;font:inherit;color:var(--ink);cursor:pointer;margin-bottom:10px;border-left:4px solid var(--c)}
+.sres:hover{border-color:var(--c);border-left-color:var(--c)}
+.sres .st{font-weight:700;font-size:15px}
+.sres .st small{font-weight:400;color:var(--muted);margin-left:6px;font-size:12.5px}
+.sres .sn{font-size:13.5px;color:var(--muted);margin-top:2px;line-height:1.6}
+mark{background:var(--qb);color:var(--q-c);font-weight:700;padding:0 1px;border-radius:3px}
+.flash{animation:flash 1.6s ease-out}
+@keyframes flash{0%,30%{background:var(--qb)}100%{background:transparent}}
+@media print{nav.top,.toc,.btn,.wbtn,.chsel,.pager{display:none}body{background:#fff}.ch[hidden]{display:block!important}details>*{display:block}}
 </style>
 </head>
 <body>
@@ -199,6 +228,8 @@ footer{padding:26px 0 50px;color:var(--muted);font-size:13.5px;border-top:1px so
   <a href="#calc" data-v="calc">微积分指南</a>
   <a href="#la" data-v="la">线性代数指南</a>
   <a href="#cpp" data-v="cpp">C++ 指南</a>
+  <a href="#wrong" data-v="wrong">错题本<span class="badge" id="wBadge" hidden></span></a>
+  <a href="#search" data-v="search">🔍 搜索</a>
 </div></nav>
 
 <!-- ===================== 主页 ===================== -->
@@ -260,6 +291,22 @@ footer{padding:26px 0 50px;color:var(--muted);font-size:13.5px;border-top:1px so
   考试范围、题型和日期以任课老师和教务处通知为准。指南按教材章节顺序编写，内容是独立写的讲解和例题，不是课本原文；章节号若与你手上的版本有出入，以课本为准。
 </div></footer>
 </div>
+
+<!-- ===================== 错题本 ===================== -->
+<div class="view" id="v-wrong" hidden><main class="wrap pagev">
+  <h2>📕 错题本</h2>
+  <p class="sub">在每日题或指南自测题上点“标为错题”就会收进这里。合上答案重做，真的会了再点“已掌握”移出。</p>
+  <div class="wfil" id="wFil"></div>
+  <div id="wList"></div>
+</main></div>
+
+<!-- ===================== 搜索 ===================== -->
+<div class="view" id="v-search" hidden><main class="wrap pagev">
+  <h2>🔍 搜索</h2>
+  <p class="sub">搜三本指南的全部小节和 105 道每日题。多个关键词用空格隔开。</p>
+  <input type="search" class="sbox" id="sIn" placeholder="例如：洛必达、正定、链表 删除" aria-label="搜索关键词" autocomplete="off">
+  <div id="sOut"></div>
+</main></div>
 
 <!-- ===================== 微积分指南 ===================== -->
 <div class="view subject-calc" id="v-calc" hidden><div class="gwrap">
@@ -3346,7 +3393,7 @@ function load(){
 }
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
 const state = load();
-for (const k of ["done","dates","dq","learn","ch"]) state[k] = state[k] || {};
+for (const k of ["done","dates","dq","learn","ch","wrong"]) state[k] = state[k] || {};
 
 function parse(s){ const [y,m,d] = s.split("-").map(Number); return new Date(y, m-1, d); }
 function fmt(s){ const d = parse(s); return (d.getMonth()+1) + "/" + d.getDate(); }
@@ -3380,6 +3427,7 @@ function renderDaily(){
     el.className = `card dq subject-${s}` + (state.dq[key] ? " done" : "");
     el.innerHTML = `<div class="dqh"><span class="tag">${SUBJ[s]}</span><label><input type="checkbox" ${state.dq[key] ? "checked" : ""}>做完了</label></div>
       <div class="qb">${it.q}</div><details><summary>看解析</summary>${it.a}</details>`;
+    el.querySelector(".dqh").insertBefore(wrongBtn("d:" + key), el.querySelector(".dqh label"));
     el.querySelector("input").addEventListener("change", e => {
       if (e.target.checked) state.dq[key] = 1; else delete state.dq[key];
       el.classList.toggle("done", e.target.checked); save(); updateProgress();
@@ -3563,16 +3611,172 @@ function initGuide(key){
 }
 SUBS.forEach(initGuide);
 
+/* ---------- 错题本 ---------- */
+// 错题键：每日题 "d:3-2-calc"；指南自测题 "q:<小节id>-<序号>"
+const QS = {};
+SUBS.forEach(key => {
+  document.querySelectorAll(`#v-${key} section.sec`).forEach(sec => {
+    sec.querySelectorAll(".box.q").forEach((box, i) => {
+      const id = `${sec.id}-${i+1}`;
+      QS[id] = { box, sec, key };
+      box.querySelector(".bt").appendChild(wrongBtn("q:" + id));
+    });
+  });
+});
+function wrongBtn(wk){
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "wbtn"; b.dataset.wk = wk;
+  paintWrong(b);
+  b.onclick = e => { e.preventDefault(); e.stopPropagation(); toggleWrong(wk); };
+  return b;
+}
+function paintWrong(b){
+  const on = !!state.wrong[b.dataset.wk];
+  b.classList.toggle("on", on);
+  b.textContent = on ? "★ 已在错题本" : "☆ 标为错题";
+}
+function toggleWrong(wk){
+  if (state.wrong[wk]) delete state.wrong[wk]; else state.wrong[wk] = Date.now();
+  save();
+  document.querySelectorAll(".wbtn").forEach(b => { if (b.dataset.wk === wk) paintWrong(b); });
+  updateBadge();
+  if (!document.getElementById("v-wrong").hidden) renderWrong();
+}
+function updateBadge(){
+  const n = Object.keys(state.wrong).filter(wrongInfo).length, b = document.getElementById("wBadge");
+  b.textContent = n; b.hidden = n === 0;
+}
+function dailyDate(dk){ const [w, d] = dk.split("-").map(Number); return addDays(START, (w-1)*7 + d - 1); }
+function wrongInfo(wk){
+  const [t, k] = [wk.slice(0, 1), wk.slice(2)];
+  if (t === "d" && DAILY[k]){
+    const sub = k.split("-")[2], dt = dailyDate(k);
+    return { sub, from: `每日题 · ${dt.getMonth()+1} 月 ${dt.getDate()} 日（第 ${k.split("-")[0]} 周周${WD[dt.getDay()]}）`,
+      body: `<div class="qb">${DAILY[k].q}</div><details><summary>看解析</summary>${DAILY[k].a}</details>`,
+      go: () => { goDay(dt); goView("home"); document.getElementById("daily").scrollIntoView(); } };
+  }
+  if (t === "q" && QS[k]){
+    const { box, sec, key } = QS[k];
+    const c = box.cloneNode(true); c.querySelector(".wbtn").remove(); c.removeAttribute("open");
+    c.querySelectorAll("details").forEach(d => d.open = false);
+    return { sub: key, from: `${SUBJ[key]}指南 · ${sec.dataset.title}`, body: c.outerHTML, go: () => goSec(sec.id, box) };
+  }
+  return null;
+}
+let wFilter = "all";
+function renderWrong(){
+  const items = Object.keys(state.wrong).map(wk => ({ wk, t: state.wrong[wk], ...wrongInfo(wk) })).filter(x => x.sub)
+    .sort((a, b) => b.t - a.t);
+  const fil = document.getElementById("wFil"); fil.innerHTML = "";
+  [["all", "全部"], ...SUBS.map(k => [k, SUBJ[k]])].forEach(([k, name]) => {
+    const n = k === "all" ? items.length : items.filter(x => x.sub === k).length;
+    const b = document.createElement("button"); b.className = "btn" + (wFilter === k ? " on" : "");
+    b.textContent = `${name} ${n}`; b.onclick = () => { wFilter = k; renderWrong(); };
+    fil.appendChild(b);
+  });
+  const list = document.getElementById("wList"); list.innerHTML = "";
+  const shown = items.filter(x => wFilter === "all" || x.sub === wFilter);
+  if (!shown.length){
+    list.innerHTML = `<div class="card rest">${items.length ? "这一科还没有错题。" : "还没有错题。做每日题或指南自测题时，做错了就点“☆ 标为错题”。"}</div>`;
+    return;
+  }
+  shown.forEach(x => {
+    const el = document.createElement("div");
+    el.className = `card witem subject-${x.sub}`;
+    const dt = new Date(x.t);
+    el.innerHTML = `<div class="wh"><span class="tag">${SUBJ[x.sub]}</span><span class="src"></span><span class="sp">${dt.getMonth()+1}/${dt.getDate()} 收录</span>
+      <button class="btn gb">回到原题</button><button class="btn ok">已掌握，移出</button></div>${x.body}`;
+    el.querySelector(".src").textContent = x.from;
+    el.querySelector(".gb").onclick = x.go;
+    el.querySelector(".ok").onclick = () => toggleWrong(x.wk);
+    list.appendChild(el);
+  });
+}
+
+/* ---------- 跳转到指南小节 ---------- */
+function goSec(id, target){
+  const sec = document.getElementById(id); if (!sec) return;
+  const key = id.split("-")[0], art = sec.closest("article.ch");
+  const i = [...document.querySelectorAll(`#v-${key} article.ch`)].indexOf(art);
+  goView(key); guides[key].show(i, false);
+  const t = target || sec;
+  requestAnimationFrame(() => {
+    t.scrollIntoView({ block: "start" });
+    t.classList.remove("flash"); void t.offsetWidth; t.classList.add("flash");
+  });
+}
+
+/* ---------- 搜索 ---------- */
+let SIDX = null;
+function buildIndex(){
+  SIDX = [];
+  SUBS.forEach(key => document.querySelectorAll(`#v-${key} section.sec`).forEach(sec => {
+    const c = sec.cloneNode(true); c.querySelectorAll("h3 label, .wbtn").forEach(x => x.remove());
+    SIDX.push({ sub: key, title: sec.dataset.title, ch: sec.closest("article.ch").dataset.title,
+      text: c.textContent.replace(/\s+/g, " "), go: () => goSec(sec.id) });
+  }));
+  const tmp = document.createElement("div");
+  Object.keys(DAILY).forEach(k => {
+    tmp.innerHTML = DAILY[k].q + " " + DAILY[k].a;
+    const sub = k.split("-")[2], dt = dailyDate(k);
+    SIDX.push({ sub, title: `每日题 · ${dt.getMonth()+1} 月 ${dt.getDate()} 日`, ch: `第 ${k.split("-")[0]} 周周${WD[dt.getDay()]}`,
+      text: tmp.textContent.replace(/\s+/g, " "),
+      go: () => { goDay(dt); goView("home"); document.getElementById("daily").scrollIntoView(); } });
+  });
+}
+const esc = t => t.replace(/[&<>"]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" })[c]);
+const reEsc = t => t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+function doSearch(){
+  const q = document.getElementById("sIn").value.trim(), out = document.getElementById("sOut");
+  out.innerHTML = "";
+  if (!q) return;
+  if (!SIDX) buildIndex();
+  const terms = q.toLowerCase().split(/\s+/);
+  const hits = SIDX.map(x => {
+    const lt = x.text.toLowerCase(), tt = x.title.toLowerCase();
+    if (!terms.every(t => lt.includes(t) || tt.includes(t))) return null;
+    let score = 0; terms.forEach(t => { if (tt.includes(t)) score += 10; score += Math.min(lt.split(t).length - 1, 5); });
+    return { x, score, pos: lt.indexOf(terms[0]) };
+  }).filter(Boolean).sort((a, b) => b.score - a.score);
+  if (!hits.length){ out.innerHTML = '<div class="card rest">没有找到。换个说法试试，比如把“洛必达法则”换成“洛必达”。</div>'; return; }
+  const hl = t => esc(t).replace(new RegExp(terms.map(t => reEsc(esc(t))).join("|"), "gi"), m => `<mark>${m}</mark>`);
+  const info = document.createElement("p"); info.className = "sub";
+  info.textContent = `找到 ${hits.length} 处` + (hits.length > 50 ? "，只显示前 50 处" : "");
+  out.appendChild(info);
+  hits.slice(0, 50).forEach(({ x, pos }) => {
+    const a = Math.max(0, pos - 30), snip = (a > 0 ? "…" : "") + x.text.slice(a, a + 110) + (a + 110 < x.text.length ? "…" : "");
+    const b = document.createElement("button");
+    b.className = `card sres subject-${x.sub}`;
+    b.innerHTML = `<div class="st">${hl(x.title)}<small>${SUBJ[x.sub]} · ${esc(x.ch)}</small></div><div class="sn">${hl(snip)}</div>`;
+    b.onclick = x.go;
+    out.appendChild(b);
+  });
+}
+let sTimer;
+document.getElementById("sIn").addEventListener("input", () => { clearTimeout(sTimer); sTimer = setTimeout(doSearch, 150); });
+
 /* ---------- 视图切换 ---------- */
+const VIEWS = ["home","calc","la","cpp","wrong","search"];
+let curView = null;
+function goView(v){
+  if (location.hash.slice(1) !== v) history.pushState(null, "", "#" + v);
+  route();
+}
 function route(){
   const h = (location.hash || "#home").slice(1);
-  const v = ["home","calc","la","cpp"].includes(h) ? h : "home";
+  const v = VIEWS.includes(h) ? h : "home";
   document.querySelectorAll(".view").forEach(el => el.hidden = el.id !== "v-" + v);
   document.querySelectorAll("nav.top a").forEach(a => a.classList.toggle("on", a.dataset.v === v));
-  window.scrollTo(0, 0);
+  if (v === "wrong") renderWrong();
+  if (v !== curView){
+    curView = v; window.scrollTo(0, 0);
+    if (v === "search") setTimeout(() => document.getElementById("sIn").focus(), 0);
+  }
 }
 window.addEventListener("hashchange", route);
+window.addEventListener("popstate", route);
 
+updateBadge();
 renderDaily();
 renderWeeks();
 renderCountdown();
