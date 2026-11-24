@@ -41,6 +41,15 @@ nav.top .brand{font-weight:700;margin-right:8px}
 nav.top a{text-decoration:none;padding:5px 13px;border-radius:999px;font-size:14px;color:var(--muted)}
 nav.top a:hover{background:var(--paper);color:var(--ink)}
 nav.top a.on{background:var(--accent);color:var(--bg);font-weight:600}
+nav.top .sm{display:none}
+@media (max-width:640px){
+  nav.top .in{gap:1px;padding:8px 6px}
+  nav.top .brand{margin-right:2px}
+  nav.top a{padding:5px 8px;font-size:13.5px}
+  nav.top .badge{margin-left:2px;min-width:16px;padding:0 4px}
+  nav.top .lg{display:none}
+  nav.top .sm{display:inline}
+}
 
 header.hero{padding:34px 0 4px}
 .eyebrow{font-size:13px;letter-spacing:.12em;color:var(--muted)}
@@ -188,6 +197,28 @@ th{font-size:13px;color:var(--muted);font-weight:600}
 .subject-la{--c:var(--la);--cb:var(--la-bg)}
 .subject-cpp{--c:var(--cpp);--cb:var(--cpp-bg)}
 footer{padding:26px 0 50px;color:var(--muted);font-size:13.5px;border-top:1px solid var(--line);margin-top:24px}
+/* bank */
+.bfil{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.bfil .btn.on{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.bfil .bl{font-size:13px;color:var(--muted);margin-right:4px}
+.bweek{margin-bottom:12px;padding:0;overflow:hidden}
+.bweek>summary{list-style:none;padding:12px 20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;color:var(--ink);font-size:15px}
+.bweek>summary::-webkit-details-marker{display:none}
+.bweek>summary .wk{font-weight:800}
+.bweek>summary .date{color:var(--muted);font-size:14px}
+.bweek>summary .now{font-size:12px;padding:2px 9px;border-radius:999px;background:var(--accent);color:var(--bg);font-weight:700}
+.bweek>summary .cnt{margin-left:auto;font-size:13px;color:var(--muted);font-weight:400;font-variant-numeric:tabular-nums}
+.bweek.current{outline:2px solid var(--accent)}
+.bweek .blist{border-top:1px solid var(--line);padding:4px 16px 8px}
+.bq{border-left:4px solid var(--c);padding:8px 0 8px 12px;margin:8px 0;border-bottom:1px dashed var(--line)}
+.bq:last-child{border-bottom:0}
+.bq .dqh{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.bq .tag{font-size:12.5px;font-weight:700;color:var(--c);background:var(--cb);padding:1px 10px;border-radius:999px}
+.bq .wbtn{margin-left:auto}
+.bq label{cursor:pointer;display:flex;gap:5px;align-items:center}
+.bq label input{accent-color:var(--c);width:15px;height:15px}
+.bq.done .qb{opacity:.6}
+.bq details{margin-top:4px}
 /* wrong book & search */
 .wbtn{font:inherit;font-size:12.5px;border:1px solid var(--line);background:var(--paper);color:var(--muted);border-radius:999px;padding:1px 10px;cursor:pointer;white-space:nowrap}
 .wbtn:hover{border-color:var(--muted)}
@@ -196,7 +227,7 @@ footer{padding:26px 0 50px;color:var(--muted);font-size:13.5px;border-top:1px so
 .box.q .bt .wbtn{margin-left:auto;letter-spacing:0;font-weight:400}
 .box.q .bt .wbtn.on{font-weight:600}
 nav.top .badge{display:inline-block;min-width:18px;padding:0 5px;margin-left:4px;border-radius:999px;background:var(--warn-c);color:#fff;font-size:11.5px;line-height:18px;text-align:center;font-weight:700}
-.pagev{padding:22px 0 40px}
+.pagev{padding-top:22px;padding-bottom:40px}
 .pagev h2{font-size:21px;margin:0 0 4px}
 .wfil{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
 .wfil .btn.on{background:var(--accent);color:var(--bg);border-color:var(--accent)}
@@ -223,13 +254,14 @@ mark{background:var(--qb);color:var(--q-c);font-weight:700;padding:0 1px;border-
 <body>
 
 <nav class="top"><div class="in">
-  <span class="brand">📚 期末复习</span>
-  <a href="#home" data-v="home">计划与每日题</a>
-  <a href="#calc" data-v="calc">微积分指南</a>
-  <a href="#la" data-v="la">线性代数指南</a>
-  <a href="#cpp" data-v="cpp">C++ 指南</a>
-  <a href="#wrong" data-v="wrong">错题本<span class="badge" id="wBadge" hidden></span></a>
-  <a href="#search" data-v="search">🔍 搜索</a>
+  <span class="brand">📚<span class="lg"> 期末复习</span></span>
+  <a href="#home" data-v="home"><span class="lg">计划与每日题</span><span class="sm">计划</span></a>
+  <a href="#calc" data-v="calc">微积分<span class="lg">指南</span></a>
+  <a href="#la" data-v="la"><span class="lg">线性代数指南</span><span class="sm">线代</span></a>
+  <a href="#cpp" data-v="cpp">C++<span class="lg"> 指南</span></a>
+  <a href="#bank" data-v="bank">题库</a>
+  <a href="#wrong" data-v="wrong">错题<span class="lg">本</span><span class="badge" id="wBadge" hidden></span></a>
+  <a href="#search" data-v="search">🔍<span class="lg"> 搜索</span></a>
 </div></nav>
 
 <!-- ===================== 主页 ===================== -->
@@ -291,6 +323,14 @@ mark{background:var(--qb);color:var(--q-c);font-weight:700;padding:0 1px;border-
   考试范围、题型和日期以任课老师和教务处通知为准。指南按教材章节顺序编写，内容是独立写的讲解和例题，不是课本原文；章节号若与你手上的版本有出入，以课本为准。
 </div></footer>
 </div>
+
+<!-- ===================== 题库 ===================== -->
+<div class="view" id="v-bank" hidden><main class="wrap pagev">
+  <h2>📋 题库</h2>
+  <p class="sub">全部 105 道每日题按周排列，周末和真题周没跟上的可以在这里补。“做完了”和错题标记与首页同步。</p>
+  <div id="bFil" style="margin-bottom:14px"></div>
+  <div id="bList"></div>
+</main></div>
 
 <!-- ===================== 错题本 ===================== -->
 <div class="view" id="v-wrong" hidden><main class="wrap pagev">
@@ -3430,7 +3470,7 @@ function renderDaily(){
     el.querySelector(".dqh").insertBefore(wrongBtn("d:" + key), el.querySelector(".dqh label"));
     el.querySelector("input").addEventListener("change", e => {
       if (e.target.checked) state.dq[key] = 1; else delete state.dq[key];
-      el.classList.toggle("done", e.target.checked); save(); updateProgress();
+      el.classList.toggle("done", e.target.checked); save(); updateProgress(); bankDirty = true;
     });
     box.appendChild(el);
   });
@@ -3522,7 +3562,7 @@ function updateProgress(){
       return;
     }
     clearTimeout(timer); armed = false; btn.textContent = "清空打勾记录";
-    state.done = {}; state.dq = {}; save(); renderWeeks(); renderDaily();
+    state.done = {}; state.dq = {}; save(); renderWeeks(); renderDaily(); bankDirty = true;
   };
 })();
 
@@ -3693,6 +3733,67 @@ function renderWrong(){
   });
 }
 
+/* ---------- 题库 ---------- */
+let bSub = "all", bStat = "all", bankDirty = true;
+function renderBank(){
+  bankDirty = false;
+  const fil = document.getElementById("bFil"); fil.innerHTML = "";
+  const row = (label, opts, cur, set) => {
+    const r = document.createElement("div"); r.className = "bfil";
+    r.innerHTML = `<span class="bl">${label}</span>`;
+    opts.forEach(([k, n]) => { const b = document.createElement("button"); b.className = "btn" + (cur === k ? " on" : ""); b.textContent = n;
+      b.onclick = () => { set(k); renderBank(); }; r.appendChild(b); });
+    fil.appendChild(r);
+  };
+  row("科目", [["all","全部"], ...SUBS.map(k => [k, SUBJ[k]])], bSub, k => bSub = k);
+  row("状态", [["all","全部"],["todo","没做"],["done","做完了"],["wrong","错题"]], bStat, k => bStat = k);
+
+  const list = document.getElementById("bList"); list.innerHTML = "";
+  const curW = today < START ? 1 : dayInfo(clampDay(today)).w;
+  let any = false;
+  for (let w = 1; w <= 7; w++){
+    const keys = [];
+    for (let d = 1; d <= 5; d++) SUBS.forEach(s => { const k = `${w}-${d}-${s}`; if (DAILY[k]) keys.push(k); });
+    const pass = k => (bSub === "all" || k.endsWith("-" + bSub)) &&
+      (bStat === "all" || (bStat === "todo" && !state.dq[k]) || (bStat === "done" && state.dq[k]) || (bStat === "wrong" && state.wrong["d:" + k]));
+    const shown = keys.filter(pass);
+    if (!shown.length) continue;
+    any = true;
+    const ws = addDays(START, (w-1)*7), we = addDays(ws, 6);
+    const det = document.createElement("details");
+    det.className = "card bweek" + (w === curW ? " current" : "");
+    det.open = w === curW || bStat !== "all";
+    const sum = document.createElement("summary");
+    sum.innerHTML = `<span class="wk">第 ${w} 周</span><span class="date">${ws.getMonth()+1}/${ws.getDate()}–${we.getMonth()+1}/${we.getDate()}</span>` +
+      (w === curW ? '<span class="now">本周</span>' : "") + `<span class="cnt"></span>`;
+    const cnt = sum.querySelector(".cnt");
+    const paintCnt = () => {
+      const pk = keys.filter(k => bSub === "all" || k.endsWith("-" + bSub));
+      cnt.textContent = `已做 ${pk.filter(k => state.dq[k]).length} / ${pk.length}` + (bStat !== "all" ? ` · 显示 ${shown.length} 道` : "");
+    };
+    paintCnt();
+    det.appendChild(sum);
+    const box = document.createElement("div"); box.className = "blist";
+    shown.forEach(k => {
+      const s = k.split("-")[2], dt = dailyDate(k);
+      const el = document.createElement("div");
+      el.className = `bq subject-${s}` + (state.dq[k] ? " done" : "");
+      el.innerHTML = `<div class="dqh"><span class="tag">${SUBJ[s]}</span><span>${dt.getMonth()+1}/${dt.getDate()} 周${WD[dt.getDay()]}</span>
+        <label><input type="checkbox" ${state.dq[k] ? "checked" : ""}>做完了</label></div>
+        <div class="qb">${DAILY[k].q}</div><details><summary>看解析</summary>${DAILY[k].a}</details>`;
+      el.querySelector(".dqh").insertBefore(wrongBtn("d:" + k), el.querySelector(".dqh label"));
+      el.querySelector("input").addEventListener("change", e => {
+        if (e.target.checked) state.dq[k] = 1; else delete state.dq[k];
+        el.classList.toggle("done", e.target.checked); save(); updateProgress(); paintCnt(); renderDaily();
+      });
+      box.appendChild(el);
+    });
+    det.appendChild(box);
+    list.appendChild(det);
+  }
+  if (!any) list.innerHTML = `<div class="card rest">${bStat === "todo" ? "这个范围里的题都做完了 👍" : bStat === "wrong" ? "这个范围里没有标为错题的每日题。" : "这个范围里没有题。"}</div>`;
+}
+
 /* ---------- 跳转到指南小节 ---------- */
 function goSec(id, target){
   const sec = document.getElementById(id); if (!sec) return;
@@ -3756,7 +3857,7 @@ let sTimer;
 document.getElementById("sIn").addEventListener("input", () => { clearTimeout(sTimer); sTimer = setTimeout(doSearch, 150); });
 
 /* ---------- 视图切换 ---------- */
-const VIEWS = ["home","calc","la","cpp","wrong","search"];
+const VIEWS = ["home","calc","la","cpp","bank","wrong","search"];
 let curView = null;
 function goView(v){
   if (location.hash.slice(1) !== v) history.pushState(null, "", "#" + v);
@@ -3768,6 +3869,7 @@ function route(){
   document.querySelectorAll(".view").forEach(el => el.hidden = el.id !== "v-" + v);
   document.querySelectorAll("nav.top a").forEach(a => a.classList.toggle("on", a.dataset.v === v));
   if (v === "wrong") renderWrong();
+  if (v === "bank" && (bankDirty || v !== curView)) renderBank();
   if (v !== curView){
     curView = v; window.scrollTo(0, 0);
     if (v === "search") setTimeout(() => document.getElementById("sIn").focus(), 0);
